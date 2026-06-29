@@ -17,7 +17,6 @@ app.get('/', async(req, res) => {
 app.use(express.json());
 app.use(helmet());
 
-/*
 mongoose.connect(process.env.MONGO_URI)
 try {
     await console.log('Conectado a MongoDB 🙌');
@@ -25,7 +24,6 @@ try {
     console.error('Error connection MongoDB', error.message);
     process.exit(1); //Detiene la app
 };
-*/
 
 app.listen(PORT, () => {
     console.log(`Hola mundo http://localhost:${PORT}`);
