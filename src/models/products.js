@@ -1,7 +1,7 @@
 import { MongoGCPError } from "mongodb";
 import mongoose, { Schema } from "mongoose";
 
-const productSchema = new Schema({
+const Product = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -22,9 +22,9 @@ const productSchema = new Schema({
     },
     dateOfRegister: {
         type: Date,
-        default: date.now
+        default: Date.now
     }
 });
 
-productSchema.index({ name: 'text', description: 'text'});
-export default mongoose.model('Product', productSchema);
+Product.index({ name: 'text', description: 'text'});
+export default mongoose.model('Product', Product);
