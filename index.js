@@ -7,7 +7,13 @@ import userRoutes from '../main_project/src/routes/usersRoute.js';
 //import MONGO_URI from 'dotenv';
 
 const app = express();
-const PORT = process.env.PORT || 5100;
+//const PORT = process.env.PORT || 5100;
+
+if(process.env.NODE_ENV !== 'production'){
+    app.listen(5100, () => {
+        console.log("Servidor corriendo en http://localhost:5100");
+    });
+}
 
 app.get('/', async(req, res) => {
     res.json({
@@ -19,6 +25,8 @@ app.get('/', async(req, res) => {
 //PROTECTORES 
 app.use(express.json());
 app.use(helmet());
+app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 mongoose.connect(process.env.MONGO_URI)
 try {
@@ -32,3 +40,5 @@ try {
 app.listen(PORT, () => {
     console.log(`Hola mundo http://localhost:${PORT}`);
 });
+
+module.exports = app();

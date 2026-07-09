@@ -4,7 +4,7 @@ import { createProducts, getProducts, updateProducts, deleteProducts } from '../
 const router = express.Router();
 
 router.post('/', createProducts);
-router.get('/', getProducts);
+router.get('/:id', getProducts);
 router.put('/:id', updateProducts);
 router.delete('/:id', deleteProducts);
 
