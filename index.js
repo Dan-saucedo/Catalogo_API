@@ -2,8 +2,8 @@ import express from 'express';
 import helmet from 'helmet';
 import 'dotenv/config';
 import mongoose from 'mongoose';
-import productRoutes from './src/routes/productsRoute.js';
-import userRoutes from './src/routes/usersRoute.js';
+import productRoutes from './src/routes/productsroute.js';
+import userRoutes from './src/routes/usersroute.js';
 
 const app = express();
 const PORT = process.env.PORT || 5100;
