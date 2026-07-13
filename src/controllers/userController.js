@@ -1,5 +1,5 @@
 import userModel from '../models/users.js';
-import bcrypt from 'bcryptjs';
+//import bcrypt from 'bcryptjs';
 import {generateToken} from '../helpers/jsonwebtoken.js';
 
 //CREATE USER (REGISTER)
