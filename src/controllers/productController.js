@@ -15,6 +15,14 @@ export const createProducts = async ( req, res ) => {
 //READ: 
 export const getProducts = async ( req, res ) => {
     try {
+
+        if( req.params.id ){
+            const product = await productsModel.findById( req.params.id );
+            if(!product){
+                return res.status(404).json({ msg: "Producto no encontrado"})
+            }
+            return res.status(200).json(product);
+        }
         const { page= 1, limit= 10, search } = req.query;
         let query = {};
 
