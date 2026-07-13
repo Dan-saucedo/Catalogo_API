@@ -1,5 +1,5 @@
 import userModel from '../models/users.js';
-//import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 import {generateToken} from '../helpers/jsonwebtoken.js';
 
 //CREATE USER (REGISTER)
@@ -80,6 +80,7 @@ export const loginUser = async(req, res) => {
         return res.json({message: "Successfully logged in, welcome back! 😊", token});
 
     } catch (error) {
-        res.status(500).json({error: "Internal server error", message: error});
+        res.status(500).json({error: "Internal server error", message: error.message, stack: error.stack});
     }
 };
+
