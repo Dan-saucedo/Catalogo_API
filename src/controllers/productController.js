@@ -22,7 +22,7 @@ export const getProducts = async ( req, res ) => {
             query = {$text: {$search: search}};
         }
 
-        const products = await productsModel.find(query)
+        const products = await productsModel.findById(query)
             .limit( limit*1 )
             .skip((page - 1) * limit)
             .exec();
