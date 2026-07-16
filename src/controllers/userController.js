@@ -1,5 +1,6 @@
 import userModel from '../models/users.js';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import {generateToken} from '../helpers/jsonwebtoken.js';
 
 //CREATE USER (REGISTER)
@@ -30,7 +31,8 @@ export const registerUser = async (req, res) => {
 //READ USER (USER CAN SEE THEIR DATA)
 export const getUserStatus = async( req, res ) => {
     try{
-        const user = await userModel.findById( req.params.id).select('-password');
+        const userId = req.user.id;
+        const user = await userModel.findById( userId ).select('-password');
 
         if(!user) return res.status(404).json({ message: "User not found❓" });
         res.status(200).json(user);
@@ -74,10 +76,17 @@ export const loginUser = async(req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch) return res.status(400).json({message: "Incorrect password ❓"});
 
-        const payload = {id: user.id};
-        const token = generateToken(payload);
-
-        return res.json({message: "Successfully logged in, welcome back! 😊", token});
+        //GENERACION DEL JWT (VERIFICACION)
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        return res.status(200).json({
+            message: "Successfully logged in, welcome back! 😊", 
+            token: token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
+        });
 
     } catch (error) {
         res.status(500).json({error: "Internal server error", message: error.message, stack: error.stack});

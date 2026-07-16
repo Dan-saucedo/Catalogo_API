@@ -1,11 +1,16 @@
 import express from "express";
 import { createProducts, getProducts, updateProducts, deleteProducts } from '../controllers/productController.js';
+import { verifyToken } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post('/', createProducts);
+//RUTAS PUBLICAS
 router.get('/:id', getProducts);
-router.put('/:id', updateProducts);
-router.delete('/:id', deleteProducts);
+router.get('/', getProducts);
+
+//RUTAS PROTEGIDAS
+router.post('/', verifyToken, createProducts);
+router.put('/:id', verifyToken, updateProducts);
+router.delete('/:id', verifyToken, deleteProducts);
 
 export default router;
